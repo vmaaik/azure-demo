@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "westeurope"
+        },
+        "adminUsername": {
+            "value": ""
+        },
+        "adminPassword": {
+            "value": ""
+        },
+        "adVMSize": {
+            "value": "Standard_B1s"
+        },
+        "sqlVMSize": {
+            "value": "Standard_B2s"
+        },
+        "witnessVMSize": {
+            "value": "Standard_B1s"
+        },
+        "domainName": {
+            "value": "contoso.com"
+        },
+        "sqlServerServiceAccountUserName": {
+            "value": "sqlservice"
+        },
+        "sqlServerServiceAccountPassword": {
+            "value": ""
+        },
+        "sqlStorageAccountName": {
+            "value": "bjssdemoar"
+        },
+        "sqlStorageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "virtualNetworkName": {
+            "value": "autohaVNET"
+        },
+        "autoPatchingDay": {
+            "value": "Sunday"
+        },
+        "autoPatchingStartHour": {
+            "value": "2"
+        },
+        "sqlAOAGName": {
+            "value": "Contoso-ag"
+        },
+        "sqlAOListenerPort": {
+            "value": "1433"
+        },
+        "sqlAOListenerName": {
+            "value": "Contoso-listener"
+        },
+        "sqlServerVersion": {
+            "value": "SQL2012SP4-WS2012R2-ENT"
+        },
+        "numberOfSqlVMDisks": {
+            "value": "1"
+        },
+        "workloadType": {
+            "value": "GENERAL"
+        }
+    }
+}
