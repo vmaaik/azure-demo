@@ -6,8 +6,7 @@ The diagram illustrates the parts of a complete SQL Server Availability Group in
 
 ![](https://github.com/vmaaik/azure-demo/blob/master/diagram/DemoDiagram1.png?raw=true)
 
-####  Run the script
-In order to run the script with following parameteres:
+####  Running the script
 
 ```
 ./deploy.ps1 -subscriptionId '<azureSubscriptionID>' -resourceGroupName '<resourceGroupName>' -resourceGroupLocation '<resourceGroupLocation>' -deploymentName '<deploymentName>' 
