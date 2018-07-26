@@ -1,0 +1,36 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "existingVNETName": {
+      "value": "autohaVNET3mnq4"
+    },
+    "existingSubnetName": {
+      "value": "sqlSubnet"
+    },
+    "vmSize": {
+      "value": "Standard_B2s"
+    },
+    "domainToJoin": {
+      "value": "contoso.com"
+    },
+    "domainUsername": {
+      "value": ""
+    },
+    "domainPassword": {
+      "value": ""
+    },
+    "domainJoinOptions": {
+      "value": 3
+    },
+    "vmAdminUsername": {
+      "value": ""
+    },
+    "vmAdminPassword": {
+      "value": ""
+    },
+    "dnsLabelPrefix": {
+      "value": "testbjssvm" 
+    }
+  }
+}
