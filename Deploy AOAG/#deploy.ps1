@@ -1,9 +1,9 @@
 <#
  .SYNOPSIS
-    Deploys an Always On Availability Group 
+    Deploys Always On Availability Group 
 
  .DESCRIPTION
-    2 SQL Servers + FSW, 2 Domain Controllers, Test VM (optional)
+    Virtual Machines: 2 SQL Servers + FSW, 2 Domain Controllers, Test VM (optional)
 	Optionally VM for testing purpouses can be deployed and added to existing domain.
 
  .PARAMETER subscriptionId
@@ -29,8 +29,6 @@
 
  .PARAMETER parametersVM
     Optional, path to the parameters file. Defaults to parametersVM.json. If file is not found, will prompt for parameter values based on template.
-
-
 #>
 
 param(
@@ -59,9 +57,7 @@ param(
  $azureDeployTestVM = (Get-Location).ToString() +  '\azureDeployTestVM.json',
 
  [string]
- $parametersVM = (Get-Location).ToString() +  '\parametersAlwaysOn.json'
- 
- 
+ $parametersVM = (Get-Location).ToString() +  '\parametersVM.json'
 )
 
 <#
@@ -83,7 +79,9 @@ Function RegisterRP {
 #******************************************************************************
 $ErrorActionPreference = "Stop"
 
-Write-host "This scrip deploys AlwaysOn Availabi SQL Server VM for testing purpouses? (Default is No)" -ForegroundColor Yellow 
+# Choose additional deloyment
+
+Write-host "Would you like to deploy additional VM (SQL Server) for testing purpouses? (Default is No)" -ForegroundColor Yellow 
     $ReadHost = Read-Host " ( y / n ) " 
 	Switch ($ReadHost) 
      { 
@@ -93,14 +91,17 @@ Write-host "This scrip deploys AlwaysOn Availabi SQL Server VM for testing purpo
      } 
 
 # sign in
+
 Write-Host "Logging in...";
 Login-AzureRmAccount;
 
 # select subscription
+
 Write-Host "Selecting subscription '$subscriptionId'";
 Select-AzureRmSubscription -SubscriptionID $subscriptionId;
 
 # Register RPs
+
 $resourceProviders = @("microsoft.resources");
 if($resourceProviders.length) {
     Write-Host "Registering resource providers"
@@ -109,7 +110,8 @@ if($resourceProviders.length) {
     }
 }
 
-#Create or check for existing resource group
+# Create or check for existing resource group
+
 $resourceGroup = Get-AzureRmResourceGroup -Name $resourceGroupName -ErrorAction SilentlyContinue
 if(!$resourceGroup)
 {
@@ -124,22 +126,27 @@ else{
     Write-Host "Using existing resource group '$resourceGroupName'";
 }
 
-# Start Always On Availability Grup deployment
-Write-Host "Starting deployment of Always On Availability Grup...";
+# Start Always On Availability Group deployment
+
+Write-Host "Starting deployment of Always On Availability Group...";
 if(Test-Path $parametersAlwaysOn) {
     New-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile $azureDeployAlwaysOn -TemplateParameterFile $parametersAlwaysOn;
 } else {
     New-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile $azureDeployAlwaysOn;
 }
 
-Write-Host "Deployment of Always On Avilability Group has been succesfully finished";
+Write-Host "Deployment of Always On Avilability Group has been successfully finished";
 
 # Start TEST VM deployment (optional)
 
-if($TestVM) {
-Write-Host "Starting deployment of Test VM...";
-    New-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile $azureDeployTestVM -TemplateParameterFile $parametersVM;
-} else {
-Write-Host "Starting deployment of Test VM...";
-    New-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile $azureDeployTestVM;
+if($TestVM){
+	Write-Host "Starting deployment of Test VM...";
+	if(Test-Path $parametersVM) {
+		New-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile $azureDeployTestVM -TemplateParameterFile $parametersVM;
+		
+} 	else {
+		Write-Host "Starting deployment of Test VM...";
+		New-AzureRmResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile $azureDeployTestVM;
+}
+	Write-Host "Deployment of Test VM has been successfully finished";
 }
