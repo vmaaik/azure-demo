@@ -397,7 +397,7 @@
                 }
             }
         ],
-        "virtualNetworkNameWithSuffix": "[substring(concat(parameters('virtualNetworkName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
+        "virtualNetworkNameWithSuffix": "[parameters('virtualNetworkName')]",
         "primaryDCIPAddressNameWithSuffix": "[substring(concat(variables('primaryDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
         "backupDCIPAddressNameWithSuffix": "[substring(concat(variables('backupDCIPAddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
         "sql1AddressNameWithSuffix": "[substring(concat(variables('sql1AddressName'), uniqueString(parameters('sqlStorageAccountName'))),0,15)]",
